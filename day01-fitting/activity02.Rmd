@@ -6,3 +6,97 @@ output: github_document
 ```{r global-options, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
+
+
+```{r Read_data}
+df <- readr::read_csv("https://covidtracking.com/data/download/all-states-history.csv")
+
+df
+```
+```{r}
+
+```
+
+After doing this and viewing the loaded data, answer the following
+questions:
+
+** 1.  What are the dimensions of the dataset? What does each row
+    represent? **
+    The rows represent the daily reposted cases for covid 19 reports on various parameters such as death, confirmed cases, and others. there are 20,780 rows.
+
+** 2.  Do you have multiple measurements over time? Across different
+    locations? Do you plan on focusing on all of these values? Do you
+    need to subset your dataset to be more focused? For example, we
+    focused on data from the year 2016 in Activity 1. **
+    The data is measured over time since the first case of covid-19 was reported in the US. I am focused on all the values because they are critical in tracking the trend of covid-19 pandemic across different states in the US. 
+
+** 3.  What two variables are you focusing on? That is, what is your
+    research question and what information do you have to explore this
+    question? Keep in mind that for this activity we are focusing on SLR **
+    
+    The main question of this study is to determined whether there was a relationship between the number of recovered patients and the hospitalizations.
+
+## Task 4: Explore your data
+
+4.  Create a new R code chunk (or multiple R code chunks) and plot each
+    of your variables - separately and together. Be sure to describe
+    what you notice/wonder. Does the relationship look linear?
+    
+```{r subsetting_data}
+subset_data <- subset(df, select = c("date","hospitalized", "recovered")) #selected only the columns of interest
+
+
+#clean the data by puting 0 where there NA values. 
+#The missing values could not ben totally removed since, NA may mean that there were no recoveries or hospitalizations on specific days.
+
+subset_data["hospitalized"][is.na(subset_data["hospitalized"])] <- 0
+subset_data["recovered"][is.na(subset_data["recovered"])] <- 0
+
+subset_data
+```
+```{r plotting_recovered}
+library(ggplot2)
+library(dplyr)
+# Group by date and calculate total recovered
+rec_data <- subset_data %>%
+  group_by(date) %>%
+  summarize(TotalRecovered = sum(recovered))
+
+# Create scatter plot
+ggplot(rec_data, aes(x = date, y = TotalRecovered)) +
+  geom_point() +
+  labs(x = "Date", y = "Total Recovered")
+
+```
+```{r plotting_hospitalizations}
+#hospitalizations trend
+hos_data <- subset_data %>%
+  group_by(date) %>%
+  summarize(TotalHospitalized = sum(hospitalized))
+
+# Create scatter plot
+ggplot(hos_data, aes(x = date, y = TotalHospitalized)) +
+  geom_point() +
+  labs(x = "Date", y = "Total Hospitalized")
+
+```
+```{r altogether_visualization}
+#ploting scatter plot for both
+# Group by date and calculate total recovered and hospitalizations
+grouped_data <- subset_data %>%
+  group_by(date) %>%
+  summarize(TotalRecovered = sum(recovered), TotalHospitalizations = sum(hospitalized))
+
+# creating the visualization
+ggplot(grouped_data, aes(x = date)) +
+  geom_point(aes(y = TotalRecovered), color = "blue", label = "Recovered") +
+  geom_point(aes(y = TotalHospitalizations), color = "red", label = "Hospitalized") +
+  labs(x = "Date", y = "Count") +
+  scale_color_manual(values = c("blue", "red")) +
+  guides(color = guide_legend()) +
+  theme_bw()
+```
+
+## Notable findings
+The data for both recovered and hospitalized patients indicate that since the start of Covid-19 pandemic, the number of patients hospitalized and recovered rapidly increased. However, from the plot of the combined data, the data suggest that the number of recoveries was substantially higher compared to hospitalized patients. Furthermore, from the graph, it is notable that although the initial relationship was linear, the dependent variable (recovered cases) was not greatly affected by number of hospitalizations - independent variable. Therefore, the relationship not linear. 
+

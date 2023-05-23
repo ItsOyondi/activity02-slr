@@ -39,9 +39,12 @@ Before we get too far, underneath the R Code Chunk titled
 `global-options` (essentially the only thing in this document), provide
 a description of your data:
 
-1.  Explain why you chose that - why is it interesting to you?
-2.  Explain where you obtained your data from.
-3.  Who created this dataset?
+ # 1.  Explain why you chose that - why is it interesting to you?
+The main reason for my selection of the dataset was to explore the relationship between Covid-19 tests, hospitalizations, cases reported and number of recoveries. This data is interesting to understand how the US recovered faster from the impacts of Covid-19 and establish whether the high vaccinations, hospitalizations played a critical role in controling the spread of the virus. 
+ # 2.  Explain where you obtained your data from.
+I obtained the data from: [Covid Tracking Site](https://covidtracking.com/data)
+# 3.  Who created this dataset?
+The data was created by the ** Covid Tracking Project Team **
 
 I will invite you to update this section on the second day of this
 activity.
