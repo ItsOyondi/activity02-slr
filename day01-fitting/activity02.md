@@ -183,3 +183,22 @@ from the graph, it is notable that although the initial relationship was
 linear, the dependent variable (recovered cases) was not greatly
 affected by number of hospitalizations - independent variable.
 Therefore, the relationship not linear.
+
+*\#Answer the following question:*
+
+Use `statsr::plot_ss` to choose a line that does a good job of
+minimizing the sum of squares. Run the function several times.
+
+*Answer the following questions:*
+
+5.  What was the smallest sum of squares that you got? What was the
+    relationship between your line and the data points? **The smallest
+    Sum of Squares: 1.392718e+15 and the relationship between the lines
+    was linear. The resduals were normally distributed, no outliers.**
+6.  What was the largest sum of squares you got? What was the
+    relationship between your line and the data points? **The largest
+    Sum of Squares: 8.062926e+15. The relationship seemed linear.**
+
+The linear model equation is:
+
+\_\_y\_hat = b\_1\*1.3927e+15 + 1.1385e+0.6\_\_
